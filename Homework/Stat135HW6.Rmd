@@ -1,0 +1,189 @@
+---
+title: "Stat135HW6"
+author: "Leomart Crisostomo"
+date: "4/4/2018"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+data <- read.table(file = "/Users/Leomart/Desktop/Stat135/beeswax.txt",header = TRUE, sep = ",")
+hydrocarbons = data$Hydrocarbon
+mean(hydrocarbons)
+sd(hydrocarbons)
+
+# ECDF of Percentage of Hydrocarbon
+ecdf_function = ecdf(hydrocarbons)
+plot(ecdf_function, ylab = 'Cumulative Frequency', xlab = 'Percentage of Hydrocarbon', main = 'The ECDF of Percentages of Hydrocarbons', col = 'purple')
+
+quantile(ecdf_function, prob = c(.90, .75, .50, .25, .10))
+
+
+breaks = c()
+for (i in 0:12){
+  breaks = c(breaks, 11.75 + 0.5*i)
+}
+hist(hydrocarbons, col = 'blue', main = 'Hydrocarbons', xlab = 'Percentages of Hydrocarbons', breaks = breaks)
+
+
+qqnorm(hydrocarbons, col = 'red')
+qqline(hydrocarbons)
+
+```
+
+
+```{r}
+#8a
+x = seq(0,6, by = 0.05)
+
+exp_Fn = pexp(x)
+sd = sqrt((1/100) * (exp_Fn / (1 - exp_Fn)))
+plot(x,sort(sd), ylab = "sd(empirical log survival function)", xlab = 't')
+
+
+
+
+# 8b
+sd_log = function(t){
+  sqrt((exp(t)-1)/100)
+}
+t1 = runif(100, 0, 6)
+plot(t1, sd_log(t1), xlab = 't', ylab = "sd(empirical log survival function)")
+
+t2 = runif(100, 0, 6)
+plot(t2, sd_log(t2), xlab = 't', ylab = "sd(empirical log survival function)")
+
+t3 = runif(100, 0, 6)
+plot(t3, sd_log(t3), xlab = 't', ylab = "sd(empirical log survival function)")
+
+t4 = runif(100, 0, 6)
+plot(t4, sd_log(t4), xlab = 't', ylab = "sd(empirical log survival function)")
+
+```
+
+
+
+```{r}
+# 26
+# Iridium
+iridium <- read.table("/Users/Leomart/Desktop/Stat135/iridium.txt", header = FALSE)$V1
+hist(iridium, xlab = "Iridium (kcal/mol)", main = "Iridium", breaks = 5)
+stem(iridium)
+boxplot(iridium, ylab = "Iridium (kcal/mol)", main = "Iridium")
+plot(iridium, ylab = "Iridium (kcal/mol)", main = "Iridium")
+
+mean(iridium)
+sd(iridium)
+median(iridium)
+
+sort_iridium = sort(iridium)
+ten_percent_iridium = sort_iridium[2:26]
+
+mean(ten_percent_iridium)
+median(ten_percent_iridium)
+
+twenty_percent_iridium = sort_iridium[5:23]
+mean(twenty_percent_iridium)
+median(twenty_percent_iridium)
+
+
+# i
+iridium_means_10= c()
+for (i in 0:1000){
+  mysample = sample(iridium, 27, replace = TRUE)
+  new_mean = mean(mysample[2:26])
+  iridium_means_10= c(iridium_means_10, new_mean)
+}
+mean(iridium_means_10)
+sd(iridium_means_10)
+
+iridium_means_20 = c()
+for (i in 0:1000){
+  mysample = sample(iridium, 27, replace = TRUE)
+  new_mean = mean(mysample[5:23])
+  iridium_means_20= c(iridium_means_20, new_mean)
+}
+mean(iridium_means_20)
+sd(iridium_means_20)
+
+# j
+iridium_median= c()
+for (i in 0:1000){
+  mysample = sample(iridium, 27, replace = TRUE)
+  new_median = median(mysample)
+  iridium_median = c(iridium_median, new_median)
+}
+mean(iridium_median)
+sd(iridium_median)
+
+```
+
+
+
+```{r}
+# 26
+# Rhodium
+rhodium <- read.table("/Users/Leomart/Desktop/Stat135/rhodium.txt", header = FALSE )$V1
+hist(rhodium, xlab = "Iridium (kcal/mol)", main = "Rhodium")
+stem(rhodium)
+boxplot(rhodium, ylab = "Iridium (kcal/mol)", main = "Rhodium")
+plot(rhodium, ylab = "Iridium (kcal/mol)", main = "Rhodium")
+
+mean(rhodium)
+sd(rhodium)
+median(rhodium)
+
+
+sort_rhodium = sort(rhodium)
+ten_percent_rhodium = sort_rhodium[4:37]
+
+mean(ten_percent_rhodium)
+median(ten_percent_rhodium)
+
+twenty_percent_rhodium = sort_rhodium[8:33]
+mean(twenty_percent_rhodium)
+median(twenty_percent_rhodium)
+
+
+# i
+rhodium_means_10= c()
+for (i in 0:1000){
+  mysample = sample(rhodium, 40, replace = TRUE)
+  new_mean = mean(mysample[4:37])
+  rhodium_means_10= c(rhodium_means_10, new_mean)
+}
+mean(rhodium_means_10)
+sd(rhodium_means_10)
+
+
+rhodium_means_20 = c()
+for (i in 0:1000){
+  mysample = sample(rhodium, 40, replace = TRUE)
+  new_mean = mean(mysample[8:33])
+  rhodium_means_20= c(rhodium_means_20, new_mean)
+}
+mean(rhodium_means_20)
+sd(rhodium_means_20)
+
+
+
+# j
+rhodium_median= c()
+for (i in 0:1000){
+  mysample = sample(rhodium, 40, replace = TRUE)
+  new_median = median(mysample)
+  rhodium_median = c(rhodium_median, new_median)
+}
+mean(rhodium_median)
+sd(rhodium_median)
+
+```
+
+
+
